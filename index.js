@@ -1,6 +1,13 @@
 const express = require("express");
 const app = express();
 const puppeteer = require("puppeteer");
+const cors = require("cors");
+
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 async function weather_data() {
   const browser = await puppeteer.launch({
@@ -25,9 +32,11 @@ async function weather_data() {
   return weather;
 }
 
-app.get("/", (req, res) => {
+app.get("/", (req, res, next) => {
   weather_data().then((data) => {
+    res.header("Access-Control-Allow-Origin", "*");
     res.json({ data: data });
+    next();
   });
 });
 
