@@ -35,7 +35,7 @@ async function weather_data() {
 app.get("/", (req, res, next) => {
   weather_data().then((data) => {
     res.header("Access-Control-Allow-Origin", "*");
-    res.json({ data: data });
+    res.json(data);
     next();
   });
 });
